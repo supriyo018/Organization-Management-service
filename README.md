@@ -37,41 +37,11 @@ Stores:
 
 ## High-Level Architecture Diagram
 
-+----------------------+
-|        Client        |
-|  (Browser / Postman) |
-+----------+-----------+
-           |
-           |  REST APIs + JWT
-           v
-+----------------------------------+
-|        FastAPI Backend            |
-|                                  |
-|  +----------------------------+  |
-|  | Authentication Module      |  |
-|  |  - Admin Login             |  |
-|  |  - JWT Generation/Verify   |  |
-|  |  - Password Hashing        |  |
-|  +----------------------------+  |
-|                                  |
-|  +----------------------------+  |
-|  | Organization Service       |  |
-|  |  - Create Organization    |  |
-|  |  - Update Organization    |  |
-|  |  - Delete Organization    |  |
-|  |  - Tenant Collection Mgmt |  |
-|  +----------------------------+  |
-+---------------+------------------+
-                |
-        -----------------------------
-        |                           |
-        v                           v
-+---------------------------+   +---------------------------+
-|      Master Database      |   |     Tenant Collections    |
-|        (MongoDB)          |   |        (MongoDB)          |
-|                           |   |                           |
-|  - Organizations          |   |  - org_companyA           |
-|  - Admin Users            |   |  - org_companyB           |
-|  - Metadata               |   |  - org_companyC           |
-|  - Collection Mapping     |   |                           |
-+---------------------------+   +---------------------------+
+```md
+```mermaid
+graph TD
+    Client -->|REST + JWT| FastAPI
+    FastAPI --> Auth[Auth Module]
+    FastAPI --> Org[Organization Service]
+    Org --> MasterDB[Master DB]
+    Org --> TenantDB[Tenant Collections]
